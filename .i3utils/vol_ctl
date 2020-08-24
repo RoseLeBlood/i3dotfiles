@@ -1,0 +1,54 @@
+#!/bin/bash
+#
+# Basic volume control via Pulseaudio. Operates on the active sink.
+#
+
+cmd=$1
+
+if [ -z "$cmd" ]; then
+	echo "usage: $0 <up|down|mute|get>"
+	exit 1
+fi
+
+# Find the active sink.
+SINK_NUM=`pacmd list-sinks | awk '/* index:/ {print $3}'`
+
+vol_up() {
+	pactl set-sink-volume $SINK_NUM +5%
+	show_level
+}
+
+vol_down() {
+	pactl set-sink-volume $SINK_NUM -5%
+	show_level
+}
+
+vol_mute() {
+	pactl set-sink-mute $SINK_NUM toggle
+	is_muted=$(pacmd list-sinks \
+		| awk '/* index:/ {seen = 1} seen {print}' \
+		| awk '/muted:/ {print $2}' \
+		| head -n 1)
+
+	if [ "$is_muted" = "no" ]; then
+		show_level
+	else
+		notify-send "Volume Muted"
+	fi
+}
+
+vol_get() {
+	pacmd list-sinks | awk '/* index/ {seen = 1} seen {print}' | grep -E '^\s*volume:' | awk '{print $5}'
+}
+
+show_level() {
+	pcnt=`vol_get`
+	notify-send "Volume Level: $pcnt"
+}
+
+case "$cmd" in
+	up)   vol_up ;;
+	down) vol_down ;;
+	mute) vol_mute ;;
+	get) vol_get ;;
+esac

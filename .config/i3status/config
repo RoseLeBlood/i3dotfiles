@@ -1,0 +1,77 @@
+# i3status configuration file.
+# see "man i3status" for documentation.
+
+# It is important that this file is edited as UTF-8.
+# The following line should contain a sharp s:
+# ß
+# If the above line is not correctly displayed, fix your editor first!
+
+# https://fontawesome.com/cheatsheet/free/regular
+
+general {
+        output_format = "i3bar"
+        colors = true
+        markup = pango
+        
+        interval = 5
+        color_good = '#2f343f'
+	color_degraded = '#2f343f'
+	color_bad = '#2f343f'   
+}
+
+order += "wireless _first_"
+order += "ethernet _first_"
+order += "battery all"
+order += "disk /"
+order += "disk /home"
+order += "volume master"
+order += "cpu_usage"
+order += "load"
+order += "tztime local"
+
+
+wireless _first_ {
+        format_up = "<span foreground='#b48ead' >  %ip %essid </span>"
+        format_down = "<span foreground='#b48ead'>  Disconnected </span>"
+}
+
+ethernet _first_ {
+        format_up = "<span foreground='#88c0d0' > %ip (%speed) </span>"
+        format_down = "<span foreground='#88c0d0'>  Disconnected</span>"
+}
+
+cpu_usage {
+	format = "<span foreground='#bf616a' >  %usage (%cpu0 %cpu1) </span>"
+	max_threshold = 75
+}
+
+battery all {
+        format = "<span foreground='#a3be8c' > %status %percentage </span>"
+        format_down = "  battery"
+	status_chr = ""
+	status_bat = ""
+	status_unk = ""
+	status_full = ""
+        low_threshold = 10
+        last_full_capacity = true
+}
+disk "/" {
+        format = "<span foreground='#fec7cd' >  / %free </span>"
+}
+
+disk "/home" {
+        format = "<span foreground='#a1d569' >  home %free </span>"
+}
+volume master {
+	format = "<span foreground='#ebcb8b' >  %volume </span>"
+        format_muted = "<span foreground='#ebcb8b' >  %volume </span>"
+}
+
+load {
+        format = "<span foreground='#d48ea9' >  %1min </span>"
+}
+
+tztime local {
+	format = "<span foreground='#81a1c1' >  %time </span>"
+	format_time = "%d.%m.%Y %H:%M"
+}
