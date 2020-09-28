@@ -1,1 +1,3 @@
-# i3dotfiles
+ # My I3 config files
+ 
+ 
