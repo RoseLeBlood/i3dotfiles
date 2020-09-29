@@ -44,13 +44,7 @@ bindsym $mod+Down focus down
 bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
-# move focused window
-bindsym $mod+$m2+d move left
-bindsym $mod+$m2+r move down
-bindsym $mod+$m2+n move up
-bindsym $mod+$m2+s move right
-
-# alternatively, you can use the cursor keys:
+# move focused window, with the cursor keys:
 bindsym $mod+$m2+Left move left
 bindsym $mod+$m2+Down move down
 bindsym $mod+$m2+Up move up
@@ -123,15 +117,6 @@ bindsym $mod+$m2+p restart
 mode "resize" {
         # These bindings trigger as soon as you enter the resize mode
 
-        # Pressing left will shrink the window’s width.
-        # Pressing right will grow the window’s width.
-        # Pressing up will shrink the window’s height.
-        # Pressing down will grow the window’s height.
-        bindsym d resize shrink width 10 px or 10 ppt
-        bindsym r resize grow height 10 px or 10 ppt
-        bindsym n resize shrink height 10 px or 10 ppt
-        bindsym s resize grow width 10 px or 10 ppt
-
         # same bindings, but for the arrow keys
         bindsym Left resize shrink width 10 px or 10 ppt
         bindsym Down resize grow height 10 px or 10 ppt
@@ -185,6 +170,8 @@ bar {
 }
 ## Hide/unhide i3status bar
 bindsym $mod+m bar mode toggle
+
+## System Menu
 set $mode_system System (l) logout, (r) reboot, (s) shutdown
 mode "$mode_system" {
     bindsym l exec --no-startup-id i3-msg exit, mode "default"
